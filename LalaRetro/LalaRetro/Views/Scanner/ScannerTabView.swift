@@ -91,28 +91,17 @@ struct ScannerTabView: View {
                         }
                         .padding()
                     } else {
-                        // Scanner placeholder
+                        // Camera / Scanner
                         VStack(spacing: 20) {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(.white)
-                                .frame(height: 260)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .strokeBorder(Color(red: 0.9, green: 0.87, blue: 0.95), lineWidth: 1)
-                                )
-                                .overlay {
-                                    VStack(spacing: 10) {
-                                        Text("[ ]")
-                                            .font(.system(size: 40, design: .monospaced))
-                                            .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
-                                        Text("point camera at barcode")
-                                            .font(.system(.caption, design: .monospaced))
-                                            .foregroundStyle(.gray)
-                                        Text("(requires real device)")
-                                            .font(.system(.caption2, design: .monospaced))
-                                            .foregroundStyle(.gray.opacity(0.6))
-                                    }
-                                }
+                            BarcodeScannerView { barcode in
+                                viewModel.lookupBarcode(barcode)
+                            }
+                            .frame(height: 260)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .strokeBorder(Color(red: 0.9, green: 0.87, blue: 0.95), lineWidth: 1)
+                            )
 
                             HStack(spacing: 10) {
                                 Button { showOCR = true } label: {
