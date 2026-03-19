@@ -5,27 +5,13 @@ options:
     iOS: "17.0"
   xcodeVersion: "15.0"
   generateEmptyDirectories: true
-  groupSortPosition: top
 
 targets:
   LalaRetro:
     type: application
     platform: iOS
     sources:
-      - path: LalaRetro/App
-        group: App
-      - path: LalaRetro/Models
-        group: Models
-      - path: LalaRetro/Services
-        group: Services
-      - path: LalaRetro/ViewModels
-        group: ViewModels
-      - path: LalaRetro/Views
-        group: Views
-      - path: LalaRetro/Utils
-        group: Utils
-      - path: LalaRetro/Resources
-        group: Resources
+      - LalaRetro
       - path: ../documents
         group: Documents
         type: folder
