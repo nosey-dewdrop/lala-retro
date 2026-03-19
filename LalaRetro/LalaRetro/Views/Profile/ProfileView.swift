@@ -45,7 +45,7 @@ struct ProfileView: View {
                                         HStack(spacing: 4) {
                                             IngredientBadge(name: suspect, isSuspect: true)
                                             Button {
-                                                Task { await viewModel.removeSuspect(suspect) }
+                                                viewModel.removeSuspect(suspect)
                                             } label: {
                                                 Text("x")
                                                     .font(.system(.caption2, design: .monospaced))
@@ -108,7 +108,7 @@ struct ProfileView: View {
 
                                         Button {
                                             if let id = reaction.id {
-                                                Task { await viewModel.deleteReaction(id: id) }
+                                                viewModel.deleteReaction(id: id)
                                             }
                                         } label: {
                                             Text("[del]")
@@ -128,8 +128,8 @@ struct ProfileView: View {
                 }
             }
         }
-        .task {
-            await viewModel.load()
+        .onAppear {
+            viewModel.load()
         }
     }
 }

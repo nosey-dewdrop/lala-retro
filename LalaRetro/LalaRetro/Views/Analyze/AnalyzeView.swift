@@ -93,8 +93,8 @@ struct AnalyzeView: View {
                 }
             }
         }
-        .task {
-            await viewModel.analyze()
+        .onAppear {
+            viewModel.analyze()
         }
     }
 }

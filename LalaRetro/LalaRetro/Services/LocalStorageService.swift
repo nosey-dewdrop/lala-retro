@@ -92,4 +92,50 @@ class LocalStorageService {
         suspects.removeAll { $0 == ingredient.lowercased().trimmingCharacters(in: .whitespaces) }
         defaults.set(suspects, forKey: suspectsKey)
     }
+
+    // MARK: - Mock Data
+
+    private let mockLoadedKey = "lalaretro_mock_loaded"
+
+    func loadMockDataIfNeeded() {
+        guard !defaults.bool(forKey: mockLoadedKey) else { return }
+
+        let mockProducts: [Product] = [
+            Product(id: UUID().uuidString, name: "Moisturizing Cream", brand: "CeraVe",
+                    barcode: "3337875597395",
+                    ingredients: ["Aqua", "Glycerin", "Cetearyl Alcohol", "Caprylic/Capric Triglyceride", "Cetyl Alcohol", "Ceramide NP", "Ceramide AP", "Ceramide EOP", "Dimethicone", "Phenoxyethanol", "Sodium Hyaluronate", "Cholesterol", "Tocopherol", "Xanthan Gum"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+
+            Product(id: UUID().uuidString, name: "Niacinamide 10% + Zinc 1%", brand: "The Ordinary",
+                    barcode: "769915190585",
+                    ingredients: ["Aqua", "Niacinamide", "Pentylene Glycol", "Zinc PCA", "Dimethyl Isosorbide", "Tamarindus Indica Seed Gum", "Xanthan Gum", "Isoceteth-20", "Ethoxydiglycol", "Phenoxyethanol", "Chlorphenesin"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+
+            Product(id: UUID().uuidString, name: "Toleriane Sensitive Cream", brand: "La Roche-Posay",
+                    barcode: "3337875588676",
+                    ingredients: ["Aqua", "Glycerin", "Butyrospermum Parkii Butter", "Cetearyl Alcohol", "Niacinamide", "Dimethicone", "Propanediol", "Ceramide NP", "Tocopherol", "Sodium Hydroxide", "Capryloyl Glycine"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+
+            Product(id: UUID().uuidString, name: "Ultra Facial Cream", brand: "Kiehl's",
+                    barcode: "3605970024185",
+                    ingredients: ["Aqua", "Glycerin", "Cyclohexasiloxane", "Squalane", "Bis-PEG-18 Methyl Ether Dimethyl Silane", "Sucrose Stearate", "Stearyl Alcohol", "PEG-8 Stearate", "Phenoxyethanol", "Prunus Armeniaca Kernel Oil", "Tocopherol"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+
+            Product(id: UUID().uuidString, name: "Hydro Boost Water Gel", brand: "Neutrogena",
+                    barcode: "3574661391786",
+                    ingredients: ["Aqua", "Dimethicone", "Glycerin", "Dimethicone/Vinyl Dimethicone Crosspolymer", "Phenoxyethanol", "Sodium Hyaluronate", "Cetearyl Olivate", "Polyacrylamide", "Ethylhexylglycerin", "Chlorphenesin", "Carbomer"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+
+            Product(id: UUID().uuidString, name: "Cicaplast Baume B5+", brand: "La Roche-Posay",
+                    barcode: "3337875586269",
+                    ingredients: ["Aqua", "Hydrogenated Polyisobutene", "Dimethicone", "Glycerin", "Butyrospermum Parkii Butter", "Panthenol", "Aluminum Starch Octenylsuccinate", "Propanediol", "Cetyl PEG/PPG-10/1 Dimethicone", "Zinc Gluconate", "Madecassoside", "Manganese Gluconate", "Copper Gluconate"],
+                    photoURL: nil, addedBy: "local", createdAt: Date()),
+        ]
+
+        for product in mockProducts {
+            _ = saveProduct(product)
+        }
+
+        defaults.set(true, forKey: mockLoadedKey)
+    }
 }

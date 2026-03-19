@@ -119,11 +119,9 @@ struct LogReactionView: View {
 
                         // Save
                         Button {
-                            Task {
-                                if await viewModel.save() {
-                                    showSuccess = true
-                                    viewModel.reset()
-                                }
+                            if viewModel.save() {
+                                showSuccess = true
+                                viewModel.reset()
                             }
                         } label: {
                             HStack {
@@ -146,8 +144,8 @@ struct LogReactionView: View {
                 }
             }
         }
-        .task {
-            await viewModel.loadUserProducts()
+        .onAppear {
+            viewModel.loadUserProducts()
         }
         .alert("saved!", isPresented: $showSuccess) {
             Button("ok") {}

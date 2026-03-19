@@ -29,7 +29,7 @@ struct HomeView: View {
                                 .font(.system(.subheadline, design: .monospaced))
                                 .textInputAutocapitalization(.never)
                                 .onSubmit {
-                                    Task { await viewModel.search() }
+                                    viewModel.search()
                                 }
                         }
                         .padding(12)
