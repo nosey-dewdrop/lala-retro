@@ -5,15 +5,16 @@ Hedef: Çalışan bir app, App Store'a çıkabilecek seviyede.
 
 - [x] Proje yapısı (SwiftUI + MVVM)
 - [x] LocalStorage ile veri kaydetme (UserDefaults)
-- [x] Mock cosmetic data (6 ürün)
+- [x] Mock cosmetic data (45+ ürün — Sephora, eczane, K-beauty)
 - [x] Firebase temizliği, async/await düzeltmeleri
 - [x] Build başarılı
-- [ ] View'lardaki async kalıntıları tam temizlik
-- [ ] Barcode scanner (AVFoundation — gerçek cihaz)
-- [ ] OCR flow uçtan uca (fotoğraf → ingredient parse → kaydet)
-- [ ] Tüm tab'lar çalışır durumda (Home, Scan, React, Analyze, Profile)
+- [x] View'lardaki async kalıntıları tam temizlik
+- [x] Barcode scanner (AVFoundation — gerçek cihaz)
+- [x] OCR flow uçtan uca (fotoğraf → ingredient parse → kaydet)
+- [ ] Simulatörde full flow test
 - [ ] UI polish (tutarlı tema, empty state'ler, animasyonlar)
 - [ ] App Store hazırlığı (icon, screenshots, description)
+- [ ] README.md
 
 ## Phase 2: Backend + Hesaplar
 Hedef: Kullanıcılar hesap açsın, verileri bulutta kalsın.
