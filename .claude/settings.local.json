@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pkill -f next 2>/dev/null; sleep 2; rm -f .next/lock; npx next build 2>&1)",
+      "Bash(git checkout:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(grep -h \"^import\" /Users/damummyphus/lala-retro/src/app/page.tsx /Users/damummyphus/lala-retro/src/app/analyze/page.tsx /Users/damummyphus/lala-retro/src/app/product/\\\\[id\\\\]/page.tsx /Users/damummyphus/lala-retro/src/app/profile/page.tsx 2>/dev/null | sort -u)",
+      "Bash(npx next:*)",
+      "Bash(open /Users/damummyphus/lala-retro/index.html)",
+      "Bash(sleep 4 && open http://localhost:3000)",
+      "Bash(sleep 5 && curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000 && open http://localhost:3000)"
+    ]
+  }
+}
