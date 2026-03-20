@@ -1,4 +1,4 @@
-# LalaRetro
+# LalaRetro hellooo
 
 Cosmetic ingredient detective for iOS. Find out which ingredient is messing with your skin.
 
