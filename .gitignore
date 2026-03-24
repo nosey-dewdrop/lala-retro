@@ -37,3 +37,4 @@ GoogleService-Info.plist
 *.env
 *.env.*
 credentials.json
+CLAUDE.md
