@@ -19,11 +19,12 @@ Hedef: Çalışan bir app, App Store'a çıkabilecek seviyede.
 ## Phase 2: Backend + Hesaplar
 Hedef: Kullanıcılar hesap açsın, verileri bulutta kalsın.
 
+- [x] iCloud sync (NSUbiquitousKeyValueStore, offline-first, automatic merge)
+- [x] UserDefaults -> iCloud migration (one-time, transparent)
 - [ ] Backend seçimi (Supabase / Firebase / custom)
 - [ ] Kullanıcı kaydı + giriş (Apple Sign In, email)
 - [ ] Ürün veritabanı buluta taşınsın
 - [ ] Kullanıcılar ürün eklesin → DB genişlesin (community-driven)
-- [ ] Sync: local ↔ cloud (offline-first)
 
 ## Phase 3: Sosyal Özellikler
 Hedef: Kullanıcılar birbirinden faydalansın.
