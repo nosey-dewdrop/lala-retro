@@ -4,6 +4,16 @@ struct ProductDetailView: View {
     let product: Product
     @State private var suspects: [String] = []
     @State private var interactions: [InteractionResult] = []
+    @State private var showAllInteractions = false
+
+    private var highCount: Int { interactions.filter { $0.interaction.severity == .high }.count }
+    private var mediumCount: Int { interactions.filter { $0.interaction.severity == .medium }.count }
+    private var lowCount: Int { interactions.filter { $0.interaction.severity == .low }.count }
+
+    private var visibleInteractions: [InteractionResult] {
+        if showAllInteractions { return interactions }
+        return Array(interactions.prefix(3))
+    }
 
     var body: some View {
         ZStack {
@@ -11,6 +21,7 @@ struct ProductDetailView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    // Header
                     VStack(alignment: .leading, spacing: 4) {
                         Text(product.name)
                             .font(.system(.title3, design: .monospaced).bold())
@@ -87,32 +98,79 @@ struct ProductDetailView: View {
 
     private var interactionSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("-- interactions (\(interactions.count)) --")
-                .font(.system(.caption, design: .monospaced))
-                .foregroundStyle(.gray)
+            // Header with severity summary
+            HStack(spacing: 10) {
+                Text("-- interactions --")
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.gray)
 
-            ForEach(interactions) { result in
-                interactionCard(result)
+                Spacer()
+
+                if highCount > 0 {
+                    severityPill(count: highCount, severity: .high)
+                }
+                if mediumCount > 0 {
+                    severityPill(count: mediumCount, severity: .medium)
+                }
+                if lowCount > 0 {
+                    severityPill(count: lowCount, severity: .low)
+                }
+            }
+
+            ForEach(visibleInteractions) { result in
+                InteractionCard(result: result)
+            }
+
+            if interactions.count > 3 {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showAllInteractions.toggle()
+                    }
+                } label: {
+                    Text(showAllInteractions ? "show less" : "show all \(interactions.count) interactions")
+                        .font(.system(.caption, design: .monospaced))
+                        .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                }
             }
         }
     }
 
-    private func interactionCard(_ result: InteractionResult) -> some View {
+    private func severityPill(count: Int, severity: IngredientInteraction.Severity) -> some View {
+        Text("\(count) \(severity.rawValue)")
+            .font(.system(.caption2, design: .monospaced).bold())
+            .foregroundStyle(severityColor(severity))
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(severityBackground(severity))
+            .clipShape(RoundedRectangle(cornerRadius: 3))
+    }
+}
+
+// MARK: - Interaction Card (shared between views)
+
+struct InteractionCard: View {
+    let result: InteractionResult
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 6) {
-                severityDot(result.interaction.severity)
+                Circle()
+                    .fill(severityColor(result.interaction.severity))
+                    .frame(width: 6, height: 6)
 
                 Text("\(result.matchedA) + \(result.matchedB)")
                     .font(.system(.caption, design: .monospaced).bold())
                     .foregroundStyle(severityColor(result.interaction.severity))
             }
 
-            if result.productName != product.name {
-                Text("with \(result.productName)")
+            if result.isSameProduct {
+                Text("within \(result.productNameA)")
                     .font(.system(.caption2, design: .monospaced))
                     .foregroundStyle(.gray)
             } else {
-                Text("within this product")
+                Text("\(result.productNameA) + \(result.productNameB)")
                     .font(.system(.caption2, design: .monospaced))
                     .foregroundStyle(.gray)
             }
@@ -120,14 +178,16 @@ struct ProductDetailView: View {
             Text(result.interaction.effect)
                 .font(.system(.caption2, design: .monospaced))
                 .foregroundStyle(Color(red: 0.35, green: 0.3, blue: 0.45))
+                .fixedSize(horizontal: false, vertical: true)
 
-            HStack(spacing: 4) {
+            HStack(alignment: .top, spacing: 4) {
                 Text(">")
                     .font(.system(.caption2, design: .monospaced).bold())
                     .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
                 Text(result.interaction.advice)
                     .font(.system(.caption2, design: .monospaced))
                     .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .padding(12)
@@ -139,29 +199,27 @@ struct ProductDetailView: View {
                 .strokeBorder(severityColor(result.interaction.severity).opacity(0.2), lineWidth: 1)
         )
     }
+}
 
-    private func severityDot(_ severity: IngredientInteraction.Severity) -> some View {
-        Circle()
-            .fill(severityColor(severity))
-            .frame(width: 6, height: 6)
-    }
+// MARK: - Severity colors (shared)
 
-    private func severityColor(_ severity: IngredientInteraction.Severity) -> Color {
-        switch severity {
-        case .high: Color(red: 0.75, green: 0.2, blue: 0.2)
-        case .medium: Color(red: 0.85, green: 0.55, blue: 0.2)
-        case .low: Color(red: 0.55, green: 0.55, blue: 0.6)
-        }
-    }
-
-    private func severityBackground(_ severity: IngredientInteraction.Severity) -> Color {
-        switch severity {
-        case .high: Color(red: 0.98, green: 0.93, blue: 0.93)
-        case .medium: Color(red: 0.99, green: 0.96, blue: 0.92)
-        case .low: Color(red: 0.97, green: 0.97, blue: 0.97)
-        }
+func severityColor(_ severity: IngredientInteraction.Severity) -> Color {
+    switch severity {
+    case .high: Color(red: 0.75, green: 0.2, blue: 0.2)
+    case .medium: Color(red: 0.85, green: 0.55, blue: 0.2)
+    case .low: Color(red: 0.55, green: 0.55, blue: 0.6)
     }
 }
+
+func severityBackground(_ severity: IngredientInteraction.Severity) -> Color {
+    switch severity {
+    case .high: Color(red: 0.98, green: 0.93, blue: 0.93)
+    case .medium: Color(red: 0.99, green: 0.96, blue: 0.92)
+    case .low: Color(red: 0.97, green: 0.97, blue: 0.97)
+    }
+}
+
+// MARK: - FlowLayout
 
 struct FlowLayout: Layout {
     var spacing: CGFloat = 5

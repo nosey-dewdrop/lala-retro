@@ -19,6 +19,9 @@ struct InteractionResult: Identifiable {
     let id = UUID()
     let matchedA: String
     let matchedB: String
-    let productName: String
+    let productNameA: String
+    let productNameB: String
     let interaction: IngredientInteraction
+
+    var isSameProduct: Bool { productNameA == productNameB }
 }

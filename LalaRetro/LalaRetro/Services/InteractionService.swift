@@ -10,65 +10,122 @@ class InteractionService {
         let otherProducts = allProducts.filter { $0.id != product.id }
 
         var results: [InteractionResult] = []
-        let productIngredients = Set(product.ingredients.map { $0.lowercased().trimmingCharacters(in: .whitespaces) })
+        let productIngredients = normalizedSet(product.ingredients)
 
         for other in otherProducts {
-            let otherIngredients = Set(other.ingredients.map { $0.lowercased().trimmingCharacters(in: .whitespaces) })
+            let otherIngredients = normalizedSet(other.ingredients)
+            results.append(contentsOf: findInteractions(
+                ingredientsA: productIngredients,
+                ingredientsB: otherIngredients,
+                productNameA: product.name,
+                productNameB: other.name
+            ))
+        }
 
-            for interaction in IngredientInteractionDatabase.interactions {
-                let matchA = findMatch(ingredients: productIngredients, knownNames: interaction.ingredientA)
-                let matchB = findMatch(ingredients: otherIngredients, knownNames: interaction.ingredientB)
+        // Also check within the same product
+        results.append(contentsOf: findSelfInteractions(
+            ingredients: productIngredients,
+            productName: product.name
+        ))
 
-                if let a = matchA, let b = matchB {
+        return deduplicateAndSort(results)
+    }
+
+    /// Check interactions between a set of selected products (routine check)
+    func checkRoutineInteractions(products: [Product]) -> [InteractionResult] {
+        var results: [InteractionResult] = []
+
+        // Check each pair of products
+        for i in 0..<products.count {
+            let ingredientsA = normalizedSet(products[i].ingredients)
+
+            // Check against other products
+            for j in (i + 1)..<products.count {
+                let ingredientsB = normalizedSet(products[j].ingredients)
+                results.append(contentsOf: findInteractions(
+                    ingredientsA: ingredientsA,
+                    ingredientsB: ingredientsB,
+                    productNameA: products[i].name,
+                    productNameB: products[j].name
+                ))
+            }
+
+            // Check within each product
+            results.append(contentsOf: findSelfInteractions(
+                ingredients: ingredientsA,
+                productName: products[i].name
+            ))
+        }
+
+        return deduplicateAndSort(results)
+    }
+
+    // MARK: - Private
+
+    private func normalizedSet(_ ingredients: [String]) -> Set<String> {
+        Set(ingredients.map { $0.lowercased().trimmingCharacters(in: .whitespaces) })
+    }
+
+    private func findInteractions(
+        ingredientsA: Set<String>,
+        ingredientsB: Set<String>,
+        productNameA: String,
+        productNameB: String
+    ) -> [InteractionResult] {
+        var results: [InteractionResult] = []
+
+        for interaction in IngredientInteractionDatabase.interactions {
+            // Check A→B direction
+            if let a = findMatch(ingredients: ingredientsA, knownNames: interaction.ingredientA),
+               let b = findMatch(ingredients: ingredientsB, knownNames: interaction.ingredientB) {
+                results.append(InteractionResult(
+                    matchedA: a,
+                    matchedB: b,
+                    productNameA: productNameA,
+                    productNameB: productNameB,
+                    interaction: interaction
+                ))
+            }
+
+            // Check B→A direction
+            if let a = findMatch(ingredients: ingredientsA, knownNames: interaction.ingredientB),
+               let b = findMatch(ingredients: ingredientsB, knownNames: interaction.ingredientA) {
+                let alreadyFound = results.contains { r in
+                    r.matchedA == b && r.matchedB == a && r.productNameA == productNameA && r.productNameB == productNameB
+                }
+                if !alreadyFound {
                     results.append(InteractionResult(
                         matchedA: a,
                         matchedB: b,
-                        productName: other.name,
+                        productNameA: productNameA,
+                        productNameB: productNameB,
                         interaction: interaction
                     ))
-                }
-
-                // Check reverse direction too
-                let matchAReverse = findMatch(ingredients: productIngredients, knownNames: interaction.ingredientB)
-                let matchBReverse = findMatch(ingredients: otherIngredients, knownNames: interaction.ingredientA)
-
-                if let a = matchAReverse, let b = matchBReverse {
-                    let alreadyFound = results.contains { r in
-                        r.matchedA == b && r.matchedB == a && r.productName == other.name
-                    }
-                    if !alreadyFound {
-                        results.append(InteractionResult(
-                            matchedA: a,
-                            matchedB: b,
-                            productName: other.name,
-                            interaction: interaction
-                        ))
-                    }
                 }
             }
         }
 
-        // Also check within the same product
-        for interaction in IngredientInteractionDatabase.interactions {
-            let matchA = findMatch(ingredients: productIngredients, knownNames: interaction.ingredientA)
-            let matchB = findMatch(ingredients: productIngredients, knownNames: interaction.ingredientB)
+        return results
+    }
 
-            if let a = matchA, let b = matchB {
+    private func findSelfInteractions(ingredients: Set<String>, productName: String) -> [InteractionResult] {
+        var results: [InteractionResult] = []
+
+        for interaction in IngredientInteractionDatabase.interactions {
+            if let a = findMatch(ingredients: ingredients, knownNames: interaction.ingredientA),
+               let b = findMatch(ingredients: ingredients, knownNames: interaction.ingredientB),
+               a != b {
                 results.append(InteractionResult(
                     matchedA: a,
                     matchedB: b,
-                    productName: product.name,
+                    productNameA: productName,
+                    productNameB: productName,
                     interaction: interaction
                 ))
             }
         }
 
-        return results.sorted { lhs, rhs in
-            let severityOrder: [IngredientInteraction.Severity] = [.high, .medium, .low]
-            let lhsIndex = severityOrder.firstIndex(of: lhs.interaction.severity) ?? 2
-            let rhsIndex = severityOrder.firstIndex(of: rhs.interaction.severity) ?? 2
-            return lhsIndex < rhsIndex
-        }
+        return results
     }
 
     private func findMatch(ingredients: Set<String>, knownNames: [String]) -> String? {
@@ -81,5 +138,25 @@ class InteractionService {
             }
         }
         return nil
+    }
+
+    private func deduplicateAndSort(_ results: [InteractionResult]) -> [InteractionResult] {
+        var seen = Set<String>()
+        var unique: [InteractionResult] = []
+
+        for r in results {
+            let key = [r.matchedA, r.matchedB, r.productNameA, r.productNameB].sorted().joined(separator: "|")
+            if !seen.contains(key) {
+                seen.insert(key)
+                unique.append(r)
+            }
+        }
+
+        return unique.sorted { lhs, rhs in
+            let severityOrder: [IngredientInteraction.Severity] = [.high, .medium, .low]
+            let lhsIndex = severityOrder.firstIndex(of: lhs.interaction.severity) ?? 2
+            let rhsIndex = severityOrder.firstIndex(of: rhs.interaction.severity) ?? 2
+            return lhsIndex < rhsIndex
+        }
     }
 }
