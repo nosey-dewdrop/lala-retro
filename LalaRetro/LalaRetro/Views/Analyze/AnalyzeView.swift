@@ -179,16 +179,24 @@ struct AnalyzeView: View {
                 // Check button
                 if viewModel.selectedRoutineIds.count >= 2 {
                     Button {
-                        viewModel.checkRoutine()
+                        Task { await viewModel.checkRoutine() }
                     } label: {
-                        Text("check interactions")
-                            .font(.system(.subheadline, design: .monospaced).bold())
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(Color(red: 0.75, green: 0.55, blue: 0.85))
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                        HStack(spacing: 6) {
+                            if viewModel.isCheckingRoutine {
+                                ProgressView()
+                                    .tint(.white)
+                                    .scaleEffect(0.8)
+                            }
+                            Text(viewModel.isCheckingRoutine ? "checking..." : "check interactions")
+                                .font(.system(.subheadline, design: .monospaced).bold())
+                                .foregroundStyle(.white)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(Color(red: 0.75, green: 0.55, blue: 0.85))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
+                    .disabled(viewModel.isCheckingRoutine)
                 } else if viewModel.selectedRoutineIds.count == 1 {
                     Text("select at least 2 products to check")
                         .font(.system(.caption, design: .monospaced))

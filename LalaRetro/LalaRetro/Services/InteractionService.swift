@@ -1,6 +1,6 @@
 import Foundation
 
-class InteractionService {
+class InteractionService: @unchecked Sendable {
     static let shared = InteractionService()
     private init() {}
 
@@ -22,7 +22,6 @@ class InteractionService {
             ))
         }
 
-        // Also check within the same product
         results.append(contentsOf: findSelfInteractions(
             ingredients: productIngredients,
             productName: product.name
@@ -35,11 +34,9 @@ class InteractionService {
     func checkRoutineInteractions(products: [Product]) -> [InteractionResult] {
         var results: [InteractionResult] = []
 
-        // Check each pair of products
         for i in 0..<products.count {
             let ingredientsA = normalizedSet(products[i].ingredients)
 
-            // Check against other products
             for j in (i + 1)..<products.count {
                 let ingredientsB = normalizedSet(products[j].ingredients)
                 results.append(contentsOf: findInteractions(
@@ -50,7 +47,6 @@ class InteractionService {
                 ))
             }
 
-            // Check within each product
             results.append(contentsOf: findSelfInteractions(
                 ingredients: ingredientsA,
                 productName: products[i].name
@@ -75,30 +71,25 @@ class InteractionService {
         var results: [InteractionResult] = []
 
         for interaction in IngredientInteractionDatabase.interactions {
-            // Check A→B direction
             if let a = findMatch(ingredients: ingredientsA, knownNames: interaction.ingredientA),
                let b = findMatch(ingredients: ingredientsB, knownNames: interaction.ingredientB) {
                 results.append(InteractionResult(
-                    matchedA: a,
-                    matchedB: b,
-                    productNameA: productNameA,
-                    productNameB: productNameB,
+                    matchedA: a, matchedB: b,
+                    productNameA: productNameA, productNameB: productNameB,
                     interaction: interaction
                 ))
             }
 
-            // Check B→A direction
             if let a = findMatch(ingredients: ingredientsA, knownNames: interaction.ingredientB),
                let b = findMatch(ingredients: ingredientsB, knownNames: interaction.ingredientA) {
-                let alreadyFound = results.contains { r in
-                    r.matchedA == b && r.matchedB == a && r.productNameA == productNameA && r.productNameB == productNameB
+                let isDuplicate = results.contains { r in
+                    r.matchedA == b && r.matchedB == a &&
+                    r.productNameA == productNameA && r.productNameB == productNameB
                 }
-                if !alreadyFound {
+                if !isDuplicate {
                     results.append(InteractionResult(
-                        matchedA: a,
-                        matchedB: b,
-                        productNameA: productNameA,
-                        productNameB: productNameB,
+                        matchedA: a, matchedB: b,
+                        productNameA: productNameA, productNameB: productNameB,
                         interaction: interaction
                     ))
                 }
@@ -116,10 +107,8 @@ class InteractionService {
                let b = findMatch(ingredients: ingredients, knownNames: interaction.ingredientB),
                a != b {
                 results.append(InteractionResult(
-                    matchedA: a,
-                    matchedB: b,
-                    productNameA: productName,
-                    productNameB: productName,
+                    matchedA: a, matchedB: b,
+                    productNameA: productName, productNameB: productName,
                     interaction: interaction
                 ))
             }
@@ -131,8 +120,13 @@ class InteractionService {
     private func findMatch(ingredients: Set<String>, knownNames: [String]) -> String? {
         for known in knownNames {
             let knownLower = known.lowercased()
+            // Exact match first (fast path)
+            if ingredients.contains(knownLower) {
+                return knownLower
+            }
+            // Substring match (slow path)
             for ingredient in ingredients {
-                if ingredient == knownLower || ingredient.contains(knownLower) || knownLower.contains(ingredient) {
+                if ingredient.contains(knownLower) || knownLower.contains(ingredient) {
                     return ingredient
                 }
             }
@@ -153,10 +147,10 @@ class InteractionService {
         }
 
         return unique.sorted { lhs, rhs in
-            let severityOrder: [IngredientInteraction.Severity] = [.high, .medium, .low]
-            let lhsIndex = severityOrder.firstIndex(of: lhs.interaction.severity) ?? 2
-            let rhsIndex = severityOrder.firstIndex(of: rhs.interaction.severity) ?? 2
-            return lhsIndex < rhsIndex
+            let order: [IngredientInteraction.Severity] = [.high, .medium, .low]
+            let l = order.firstIndex(of: lhs.interaction.severity) ?? 2
+            let r = order.firstIndex(of: rhs.interaction.severity) ?? 2
+            return l < r
         }
     }
 }

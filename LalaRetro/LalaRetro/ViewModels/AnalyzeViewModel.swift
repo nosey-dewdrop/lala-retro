@@ -13,15 +13,13 @@ class AnalyzeViewModel {
     var selectedRoutineIds: Set<String> = []
     var routineInteractions: [InteractionResult] = []
     var hasCheckedRoutine = false
+    var isCheckingRoutine = false
 
     func analyze() {
         isLoading = true
-
         reactions = LocalStorageService.shared.getReactions()
-
         let allProductIds = Set(reactions.flatMap { $0.productIds })
         let products = allProductIds.compactMap { LocalStorageService.shared.getProduct(id: $0) }
-
         suspects = CrossReferenceEngine.findSuspects(reactions: reactions, products: products)
         isLoading = false
     }
@@ -37,14 +35,19 @@ class AnalyzeViewModel {
         } else {
             selectedRoutineIds.insert(id)
         }
-        // Reset results when selection changes
         hasCheckedRoutine = false
         routineInteractions = []
     }
 
-    func checkRoutine() {
+    @MainActor
+    func checkRoutine() async {
+        isCheckingRoutine = true
         let selected = allProducts.filter { selectedRoutineIds.contains($0.id ?? "") }
-        routineInteractions = InteractionService.shared.checkRoutineInteractions(products: selected)
+        let result = await Task.detached {
+            InteractionService.shared.checkRoutineInteractions(products: selected)
+        }.value
+        routineInteractions = result
         hasCheckedRoutine = true
+        isCheckingRoutine = false
     }
 }

@@ -88,9 +88,13 @@ struct ProductDetailView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
+        .task {
             suspects = LocalStorageService.shared.getSuspects()
-            interactions = InteractionService.shared.checkInteractions(for: product)
+            let product = product
+            let result = await Task.detached {
+                InteractionService.shared.checkInteractions(for: product)
+            }.value
+            interactions = result
         }
     }
 
