@@ -37,6 +37,7 @@ Hedef: Kullanıcılar birbirinden faydalansın.
 
 ## Phase 4: AI + Akıllı Özellikler
 - [x] Ingredient interaction checker (local database, 125 known combos, 3 severity levels)
+- [x] Routine check (analyze tab, select products, see all interactions between them)
 - [ ] Ingredient analizi (ne işe yarar, risk seviyesi)
 - [ ] Kişiselleştirilmiş ürün önerileri
 - [ ] "2 haftadır reaksiyon yok" push notification
