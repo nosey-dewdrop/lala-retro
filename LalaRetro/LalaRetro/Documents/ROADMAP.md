@@ -36,6 +36,7 @@ Hedef: Kullanıcılar birbirinden faydalansın.
 - [ ] Leaderboard / güvenilir katkıda bulunanlar
 
 ## Phase 4: AI + Akıllı Özellikler
+- [x] Ingredient interaction checker (local database, 16+ known bad combos, severity levels)
 - [ ] Ingredient analizi (ne işe yarar, risk seviyesi)
 - [ ] Kişiselleştirilmiş ürün önerileri
 - [ ] "2 haftadır reaksiyon yok" push notification
