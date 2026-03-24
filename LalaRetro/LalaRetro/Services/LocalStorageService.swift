@@ -2,18 +2,14 @@ import Foundation
 
 class LocalStorageService {
     static let shared = LocalStorageService()
-    private let defaults = UserDefaults.standard
-
-    private let productsKey = "lalaretro_products"
-    private let reactionsKey = "lalaretro_reactions"
-    private let suspectsKey = "lalaretro_suspects"
+    private let cloudSync = CloudSyncService.shared
 
     private init() {}
 
     // MARK: - Products
 
     func getAllProducts() -> [Product] {
-        guard let data = defaults.data(forKey: productsKey) else { return [] }
+        guard let data = cloudSync.getProductsData() else { return [] }
         return (try? JSONDecoder().decode([Product].self, from: data)) ?? []
     }
 
@@ -40,7 +36,7 @@ class LocalStorageService {
         }
         products.append(saved)
         if let data = try? JSONEncoder().encode(products) {
-            defaults.set(data, forKey: productsKey)
+            cloudSync.saveProducts(data)
         }
         return saved
     }
@@ -48,7 +44,7 @@ class LocalStorageService {
     // MARK: - Reactions
 
     func getReactions() -> [UserReaction] {
-        guard let data = defaults.data(forKey: reactionsKey) else { return [] }
+        guard let data = cloudSync.getReactionsData() else { return [] }
         return (try? JSONDecoder().decode([UserReaction].self, from: data)) ?? []
     }
 
@@ -60,7 +56,7 @@ class LocalStorageService {
         }
         reactions.append(saved)
         if let data = try? JSONEncoder().encode(reactions) {
-            defaults.set(data, forKey: reactionsKey)
+            cloudSync.saveReactions(data)
         }
     }
 
@@ -68,14 +64,14 @@ class LocalStorageService {
         var reactions = getReactions()
         reactions.removeAll { $0.id == id }
         if let data = try? JSONEncoder().encode(reactions) {
-            defaults.set(data, forKey: reactionsKey)
+            cloudSync.saveReactions(data)
         }
     }
 
     // MARK: - Suspects (Watchlist)
 
     func getSuspects() -> [String] {
-        defaults.stringArray(forKey: suspectsKey) ?? []
+        cloudSync.getSuspects() ?? []
     }
 
     func addSuspect(_ ingredient: String) {
@@ -83,14 +79,14 @@ class LocalStorageService {
         let normalized = ingredient.lowercased().trimmingCharacters(in: .whitespaces)
         if !suspects.contains(normalized) {
             suspects.append(normalized)
-            defaults.set(suspects, forKey: suspectsKey)
+            cloudSync.saveSuspects(suspects)
         }
     }
 
     func removeSuspect(_ ingredient: String) {
         var suspects = getSuspects()
         suspects.removeAll { $0 == ingredient.lowercased().trimmingCharacters(in: .whitespaces) }
-        defaults.set(suspects, forKey: suspectsKey)
+        cloudSync.saveSuspects(suspects)
     }
 
     // MARK: - Mock Data
@@ -98,7 +94,7 @@ class LocalStorageService {
     private let mockLoadedKey = "lalaretro_mock_loaded"
 
     func loadMockDataIfNeeded() {
-        guard !defaults.bool(forKey: mockLoadedKey) else { return }
+        guard !UserDefaults.standard.bool(forKey: mockLoadedKey) else { return }
 
         let mockProducts: [Product] = [
             Product(id: UUID().uuidString, name: "Moisturizing Cream", brand: "CeraVe",
@@ -466,6 +462,6 @@ class LocalStorageService {
             _ = saveProduct(product)
         }
 
-        defaults.set(true, forKey: mockLoadedKey)
+        UserDefaults.standard.set(true, forKey: mockLoadedKey)
     }
 }
