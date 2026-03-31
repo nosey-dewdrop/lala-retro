@@ -1,10 +1,13 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-    let product: Product
+    @State var product: Product
     @State private var suspects: [String] = []
     @State private var interactions: [InteractionResult] = []
     @State private var showAllInteractions = false
+    @State private var showEditSheet = false
+    @State private var showDeleteConfirm = false
+    @Environment(\.dismiss) private var dismiss
 
     private var highCount: Int { interactions.filter { $0.interaction.severity == .high }.count }
     private var mediumCount: Int { interactions.filter { $0.interaction.severity == .medium }.count }
@@ -88,6 +91,43 @@ struct ProductDetailView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        showEditSheet = true
+                    } label: {
+                        Label("edit", systemImage: "pencil")
+                    }
+                    Button(role: .destructive) {
+                        showDeleteConfirm = true
+                    } label: {
+                        Label("delete", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
+                }
+            }
+        }
+        .alert("delete product?", isPresented: $showDeleteConfirm) {
+            Button("cancel", role: .cancel) {}
+            Button("delete", role: .destructive) {
+                if let id = product.id {
+                    LocalStorageService.shared.deleteProduct(id: id)
+                    dismiss()
+                }
+            }
+        } message: {
+            Text("this will remove \(product.name) and cannot be undone.")
+        }
+        .sheet(isPresented: $showEditSheet) {
+            EditProductView(product: product) { updated in
+                product = updated
+                LocalStorageService.shared.updateProduct(updated)
+            }
+        }
         .task {
             suspects = LocalStorageService.shared.getSuspects()
             let product = product
