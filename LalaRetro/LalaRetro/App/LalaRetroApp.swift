@@ -2,6 +2,8 @@ import SwiftUI
 
 @main
 struct LalaRetroApp: App {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
     init() {
         CloudSyncService.shared.startSync()
         LocalStorageService.shared.loadMockDataIfNeeded()
@@ -9,8 +11,13 @@ struct LalaRetroApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .preferredColorScheme(.light)
+            if hasCompletedOnboarding {
+                ContentView()
+                    .preferredColorScheme(.light)
+            } else {
+                OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
+                    .preferredColorScheme(.light)
+            }
         }
     }
 }
