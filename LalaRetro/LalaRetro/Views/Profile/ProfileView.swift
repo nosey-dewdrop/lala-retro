@@ -83,6 +83,17 @@ struct ProfileView: View {
                                 ForEach(viewModel.reactions) { reaction in
                                     HStack(alignment: .top) {
                                         VStack(alignment: .leading, spacing: 4) {
+                                            // Product names
+                                            let productNames = reaction.productIds.compactMap { id in
+                                                viewModel.getProductName(id: id)
+                                            }
+                                            if !productNames.isEmpty {
+                                                Text(productNames.joined(separator: ", "))
+                                                    .font(.system(.caption, design: .monospaced).bold())
+                                                    .foregroundStyle(.black)
+                                                    .lineLimit(2)
+                                            }
+
                                             HStack(spacing: 4) {
                                                 ForEach(reaction.reactionTypes) { type in
                                                     Text("\(type.emoji) \(type.label.lowercased())")
@@ -123,6 +134,27 @@ struct ProfileView: View {
                                 }
                             }
                         }
+                        // Disclaimer
+                        Rectangle()
+                            .fill(Color(red: 0.9, green: 0.87, blue: 0.95))
+                            .frame(height: 1)
+
+                        HStack(alignment: .top, spacing: 8) {
+                            Text("i")
+                                .font(.system(.caption2, design: .monospaced).bold())
+                                .foregroundStyle(Color(red: 0.75, green: 0.55, blue: 0.85))
+                            Text("lalaretro is not medical advice. always consult a dermatologist for skin concerns.")
+                                .font(.system(.caption2, design: .monospaced))
+                                .foregroundStyle(.gray)
+                        }
+                        .padding(12)
+                        .background(Color(red: 0.96, green: 0.94, blue: 0.99))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+
+                        Text("v1.0.0")
+                            .font(.system(.caption2, design: .monospaced))
+                            .foregroundStyle(.gray)
+                            .frame(maxWidth: .infinity)
                     }
                     .padding()
                 }

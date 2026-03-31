@@ -29,4 +29,8 @@ class ProfileViewModel {
         LocalStorageService.shared.deleteReaction(id: id)
         reactions.removeAll { $0.id == id }
     }
+
+    func getProductName(id: String) -> String? {
+        LocalStorageService.shared.getProduct(id: id)?.name
+    }
 }
