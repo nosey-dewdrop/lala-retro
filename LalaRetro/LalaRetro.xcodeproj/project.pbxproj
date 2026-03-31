@@ -17,17 +17,23 @@
 		456D210326C9F4334B1AACB7 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA6897492D51F095E3DD481 /* ProductCard.swift */; };
 		4AAE5F7ABC2361811B72854D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD80904722C7B47732D3F56 /* HomeViewModel.swift */; };
 		4EA7B73F37201C7EDC11AB59 /* IngredientParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4F59B1DADB3BD7CF8C1179 /* IngredientParser.swift */; };
+		5151B5DF6849486A3A42370F /* IngredientInteractionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81910B07E1B6D3BFDB289F /* IngredientInteractionDatabase.swift */; };
 		55203628974BE8BEFCF4E851 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E61D28608B38A702670DC04 /* BarcodeScannerView.swift */; };
 		5576A9144DE28C16540F0E85 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65AE51033B5677C3109C391 /* HomeView.swift */; };
+		55BDB9FF4E46E94FA74EEC3A /* EditProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4EBCC0B6DE318C8952084A /* EditProductView.swift */; };
 		5A328616AEE14E3046527B45 /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = D6FE7E819063262BB637AB74 /* ARCHITECTURE.md */; };
+		5D0FB3BA1699A7B9A6232D22 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B7DF6D48973DB939C549E /* PrivacyInfo.xcprivacy */; };
 		5DD06DC91EF24D179511DE74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 007B645AC54303F0CCA09723 /* Assets.xcassets */; };
 		5E12CEBC63C60AC88FC134F4 /* IngredientBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345A7CD620F6256C580C602 /* IngredientBadge.swift */; };
 		5F828D121D0FB537CC13AD03 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7674A4AE6479AE0C0D573BA /* ProfileView.swift */; };
 		750422FECDCD1E6022FE542E /* OCRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EFC251A9261E5CF36ED5BA /* OCRScannerView.swift */; };
 		75AF17A957F7653967C84E20 /* CrossReferenceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD5C3B91DAFCB61EE4FA08 /* CrossReferenceEngine.swift */; };
 		8D3735EB4C1C273AF311D8A3 /* ScannerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE82EE0622C2B2F020E38FF /* ScannerTabView.swift */; };
+		9507E78295F7A8C275DFB806 /* IngredientInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92717281B072EA8FB55E70C /* IngredientInteraction.swift */; };
+		99FD1A2B9D8BC51F93953EE5 /* InteractionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8287E667AD1DB4DEFEC0A6 /* InteractionService.swift */; };
 		9C7A725CDDDC241C5C9C26DD /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737E945865DA229912670A57 /* ReactionViewModel.swift */; };
 		9CCB459DE0EEF6073E2A93AC /* OCRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4344A56643AEA3DFC71235C /* OCRService.swift */; };
+		A72DE90C5D431E495A3599E6 /* CloudSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9447FCB7A98EB10626FFE /* CloudSyncService.swift */; };
 		BDB07D1DCB351FD3A0889F56 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE9906F250974476C2FBE7 /* AddProductView.swift */; };
 		CCA0A05D08F5AA0680FFAC30 /* ROADMAP.md in Resources */ = {isa = PBXBuildFile; fileRef = E5CCFCFA664C0A0B4DDAD7D6 /* ROADMAP.md */; };
 		ED1B7111FBFD748D71DF1812 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BA2206D15572082D12D57 /* ProfileViewModel.swift */; };
@@ -37,13 +43,14 @@
 		F26070F6F8802AEE460BBABB /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305CDEFB12E4A526C66DCB5 /* GradientBackground.swift */; };
 		FAC14B48AB3B51804946E7D0 /* UserReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C73912BDA4FE417CBE450E6 /* UserReaction.swift */; };
 		FAF46FF5150FD22DBFA46120 /* LocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D326C6D2A603F0876E013DB /* LocalStorageService.swift */; };
-		A1B2C3D4E5F60718293A4B5C /* CloudSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F3A4B5C6071829304142 /* CloudSyncService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		007B645AC54303F0CCA09723 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A27163500780698BC274C68 /* LogReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogReactionView.swift; sourceTree = "<group>"; };
+		1B4EBCC0B6DE318C8952084A /* EditProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductView.swift; sourceTree = "<group>"; };
 		1BD5D0AE98CB4D3F6B97580F /* IDEAS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = IDEAS.md; sourceTree = "<group>"; };
+		1D5B7DF6D48973DB939C549E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2F8BA2206D15572082D12D57 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		31A46032538D9073770D7C6B /* LalaRetroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LalaRetroApp.swift; sourceTree = "<group>"; };
 		4305CDEFB12E4A526C66DCB5 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
@@ -61,19 +68,22 @@
 		A40621C38D00EBF7CA5B3716 /* AnalyzeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeView.swift; sourceTree = "<group>"; };
 		A4344A56643AEA3DFC71235C /* OCRService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRService.swift; sourceTree = "<group>"; };
 		A7674A4AE6479AE0C0D573BA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A9F9447FCB7A98EB10626FFE /* CloudSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncService.swift; sourceTree = "<group>"; };
 		BBE82EE0622C2B2F020E38FF /* ScannerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerTabView.swift; sourceTree = "<group>"; };
 		BD7DB1ADB7312839A782B645 /* AnalyzeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyzeViewModel.swift; sourceTree = "<group>"; };
+		CBFE9A4E21E958797D510FA8 /* LalaRetro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LalaRetro.entitlements; sourceTree = "<group>"; };
 		CD4F59B1DADB3BD7CF8C1179 /* IngredientParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientParser.swift; sourceTree = "<group>"; };
 		D6FE7E819063262BB637AB74 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
-		DFF01DB6658A95C250A9098F /* LalaRetro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LalaRetro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92717281B072EA8FB55E70C /* IngredientInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientInteraction.swift; sourceTree = "<group>"; };
+		DFF01DB6658A95C250A9098F /* LalaRetro.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LalaRetro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E345A7CD620F6256C580C602 /* IngredientBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientBadge.swift; sourceTree = "<group>"; };
 		E5CCFCFA664C0A0B4DDAD7D6 /* ROADMAP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ROADMAP.md; sourceTree = "<group>"; };
 		E65AE51033B5677C3109C391 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ECA6897492D51F095E3DD481 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
+		ED8287E667AD1DB4DEFEC0A6 /* InteractionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionService.swift; sourceTree = "<group>"; };
 		EEE29BBC49FB9E5177C6071A /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		FADF9FB4D58C566C2F82DA18 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		D1E2F3A4B5C6071829304142 /* CloudSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncService.swift; sourceTree = "<group>"; };
-		E1F2A3B4C5D6E7F809102132 /* LalaRetro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LalaRetro.entitlements; sourceTree = "<group>"; };
+		FF81910B07E1B6D3BFDB289F /* IngredientInteractionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientInteractionDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -99,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACD5C3B91DAFCB61EE4FA08 /* CrossReferenceEngine.swift */,
+				FF81910B07E1B6D3BFDB289F /* IngredientInteractionDatabase.swift */,
 				CD4F59B1DADB3BD7CF8C1179 /* IngredientParser.swift */,
 			);
 			path = Utils;
@@ -166,6 +177,7 @@
 		B256232BD2E9EF048968F87C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D92717281B072EA8FB55E70C /* IngredientInteraction.swift */,
 				FADF9FB4D58C566C2F82DA18 /* Product.swift */,
 				61A2E268B04709B1FF8F4E1C /* SuspectResult.swift */,
 				7C73912BDA4FE417CBE450E6 /* UserReaction.swift */,
@@ -176,7 +188,8 @@
 		B4C41880B800CF6C8218310A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D1E2F3A4B5C6071829304142 /* CloudSyncService.swift */,
+				A9F9447FCB7A98EB10626FFE /* CloudSyncService.swift */,
+				ED8287E667AD1DB4DEFEC0A6 /* InteractionService.swift */,
 				5D326C6D2A603F0876E013DB /* LocalStorageService.swift */,
 				A4344A56643AEA3DFC71235C /* OCRService.swift */,
 			);
@@ -187,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				9EDE9906F250974476C2FBE7 /* AddProductView.swift */,
+				1B4EBCC0B6DE318C8952084A /* EditProductView.swift */,
 				5BA6DB8CCCD4207125CF5E36 /* ProductDetailView.swift */,
 			);
 			path = Product;
@@ -195,9 +209,10 @@
 		CC187E206E47AC4DB99B851F /* LalaRetro */ = {
 			isa = PBXGroup;
 			children = (
+				CBFE9A4E21E958797D510FA8 /* LalaRetro.entitlements */,
+				1D5B7DF6D48973DB939C549E /* PrivacyInfo.xcprivacy */,
 				4AD0CB6AA0FD87B795F184C9 /* App */,
 				FAFAFDE3B8505560B0F5F5B7 /* Documents */,
-				E1F2A3B4C5D6E7F809102132 /* LalaRetro.entitlements */,
 				B256232BD2E9EF048968F87C /* Models */,
 				32E0FD2BCD7C1E62115F07E7 /* Resources */,
 				B4C41880B800CF6C8218310A /* Services */,
@@ -281,6 +296,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = E256DF8AABA83B5BEC84FF50 /* Build configuration list for PBXProject "LalaRetro" */;
 			developmentRegion = en;
@@ -309,6 +326,7 @@
 				5A328616AEE14E3046527B45 /* ARCHITECTURE.md in Resources */,
 				5DD06DC91EF24D179511DE74 /* Assets.xcassets in Resources */,
 				265D621089E964B297F8A7A2 /* IDEAS.md in Resources */,
+				5D0FB3BA1699A7B9A6232D22 /* PrivacyInfo.xcprivacy in Resources */,
 				CCA0A05D08F5AA0680FFAC30 /* ROADMAP.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,14 +342,18 @@
 				12770B9B78E06A9CA3F2FD80 /* AnalyzeView.swift in Sources */,
 				43BAC4B63781CACF3CABDFA7 /* AnalyzeViewModel.swift in Sources */,
 				55203628974BE8BEFCF4E851 /* BarcodeScannerView.swift in Sources */,
-				A1B2C3D4E5F60718293A4B5C /* CloudSyncService.swift in Sources */,
+				A72DE90C5D431E495A3599E6 /* CloudSyncService.swift in Sources */,
 				F1F9E68AB763EC5C9D9EE250 /* ContentView.swift in Sources */,
 				75AF17A957F7653967C84E20 /* CrossReferenceEngine.swift in Sources */,
+				55BDB9FF4E46E94FA74EEC3A /* EditProductView.swift in Sources */,
 				F26070F6F8802AEE460BBABB /* GradientBackground.swift in Sources */,
 				5576A9144DE28C16540F0E85 /* HomeView.swift in Sources */,
 				4AAE5F7ABC2361811B72854D /* HomeViewModel.swift in Sources */,
 				5E12CEBC63C60AC88FC134F4 /* IngredientBadge.swift in Sources */,
+				9507E78295F7A8C275DFB806 /* IngredientInteraction.swift in Sources */,
+				5151B5DF6849486A3A42370F /* IngredientInteractionDatabase.swift in Sources */,
 				4EA7B73F37201C7EDC11AB59 /* IngredientParser.swift in Sources */,
+				99FD1A2B9D8BC51F93953EE5 /* InteractionService.swift in Sources */,
 				3B11250BB8C6422CE6F32094 /* LalaRetroApp.swift in Sources */,
 				FAF46FF5150FD22DBFA46120 /* LocalStorageService.swift in Sources */,
 				F07211C12CA63358BC00CF08 /* LogReactionView.swift in Sources */,
@@ -357,10 +379,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = LalaRetro/LalaRetro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 687K7458JY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "LalaRetro needs camera access to scan barcodes and photograph ingredient lists.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "LalaRetro needs photo library access to select photos of ingredient lists for OCR scanning.";
@@ -385,10 +405,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = LalaRetro/LalaRetro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 687K7458JY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "LalaRetro needs camera access to scan barcodes and photograph ingredient lists.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "LalaRetro needs photo library access to select photos of ingredient lists for OCR scanning.";
