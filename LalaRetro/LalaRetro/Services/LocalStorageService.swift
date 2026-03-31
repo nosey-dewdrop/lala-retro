@@ -41,6 +41,23 @@ class LocalStorageService {
         return saved
     }
 
+    func updateProduct(_ product: Product) {
+        var products = getAllProducts()
+        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
+        products[index] = product
+        if let data = try? JSONEncoder().encode(products) {
+            cloudSync.saveProducts(data)
+        }
+    }
+
+    func deleteProduct(id: String) {
+        var products = getAllProducts()
+        products.removeAll { $0.id == id }
+        if let data = try? JSONEncoder().encode(products) {
+            cloudSync.saveProducts(data)
+        }
+    }
+
     // MARK: - Reactions
 
     func getReactions() -> [UserReaction] {
