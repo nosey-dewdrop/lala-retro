@@ -96,7 +96,7 @@ struct AnalyzeView: View {
                                     .frame(height: 4)
                                 RoundedRectangle(cornerRadius: 2)
                                     .fill(Color(red: 0.75, green: 0.55, blue: 0.85))
-                                    .frame(width: geo.size.width * CGFloat(viewModel.reactionCount) / 2.0, height: 4)
+                                    .frame(width: geo.size.width * min(CGFloat(viewModel.reactionCount) / 2.0, 1.0), height: 4)
                             }
                         }
                         .frame(height: 4)
